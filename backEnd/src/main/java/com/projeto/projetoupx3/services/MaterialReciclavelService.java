@@ -57,26 +57,28 @@ public class MaterialReciclavelService {
     public ApiResponse<List<MaterialReciclavel>> getMateriaisReciclaveis() {
         try {
             List<MaterialReciclavel> materiaisReciclaveis = Arrays.asList(
-                    new MaterialReciclavel("Garrafa de vidro", TipoMaterial.VIDRO),
-                    new MaterialReciclavel("Copo de vidro",TipoMaterial.VIDRO),
-                    new MaterialReciclavel("Vidros especiais", TipoMaterial.VIDRO),
-                    new MaterialReciclavel("Vidro de remédio vazio", TipoMaterial.VIDRO),
-                    new MaterialReciclavel("Potes de conserva", TipoMaterial.VIDRO),
-                    new MaterialReciclavel(": Papel de fax",TipoMaterial.PAPEL),
-                    new MaterialReciclavel("Jornais e Revistas",TipoMaterial.PAPEL),
-                    new MaterialReciclavel("Envelopes",TipoMaterial.PAPEL),
-                    new MaterialReciclavel("Listas Telefônicas",TipoMaterial.PAPEL),
-                    new MaterialReciclavel("Cartazes Velhos",TipoMaterial.PAPEL),
-                    new MaterialReciclavel("Enlatados", TipoMaterial.METAL),
-                    new MaterialReciclavel("Tampinhas de Garrafas", TipoMaterial.METAL),
-                    new MaterialReciclavel("Chapas", TipoMaterial.METAL),
-                    new MaterialReciclavel("Latas", TipoMaterial.METAL),
-                    new MaterialReciclavel("Frascos de produtos", TipoMaterial.PLASTICO),
-                    new MaterialReciclavel("Caneta (Sem a tinta)", TipoMaterial.PLASTICO),
-                    new MaterialReciclavel("Embalagens de produto de limpeza", TipoMaterial.PLASTICO),
-                    new MaterialReciclavel("Brinquedos de plástico", TipoMaterial.PLASTICO),
-                    new MaterialReciclavel("Embalagens Pet", TipoMaterial.PLASTICO)
-            );
+                    new MaterialReciclavel("Garrafa de Vidro",0.8, TipoMaterial.VIDRO),
+                    new MaterialReciclavel("Vidro de remédio vazio",0.5 , TipoMaterial.VIDRO),
+                    new MaterialReciclavel("Potes de conserva",0.3 , TipoMaterial.VIDRO),
+                    new MaterialReciclavel("Vidros especiais",0.5 , TipoMaterial.VIDRO),
+                    new MaterialReciclavel("Copo de vidro",0.5 , TipoMaterial.VIDRO),
+                    new MaterialReciclavel("Papel de fax",0.2 , TipoMaterial.PAPEL),
+                    new MaterialReciclavel("Jornais e Revistas",2.0 , TipoMaterial.PAPEL),
+                    new MaterialReciclavel("Envelopes",0.3 , TipoMaterial.PAPEL),
+                    new MaterialReciclavel("Listas Telefônicas",2.0 , TipoMaterial.PAPEL),
+                    new MaterialReciclavel("Cartazes Velhos",0.5 , TipoMaterial.PAPEL),
+                    new MaterialReciclavel("Copo de vidro",0.9 , TipoMaterial.PAPEL),
+                    new MaterialReciclavel("Enlatados",0.5 , TipoMaterial.METAL),
+                    new MaterialReciclavel("Tampinhas de Garrafas",0.1, TipoMaterial.METAL),
+                    new MaterialReciclavel("Chapas",1.5 , TipoMaterial.METAL),
+                    new MaterialReciclavel("Latas",0.3 , TipoMaterial.METAL),
+                    new MaterialReciclavel("Ferragens",2.0, TipoMaterial.METAL),
+                    new MaterialReciclavel("Frascos de produtos",0.6, TipoMaterial.PLASTICO),
+                    new MaterialReciclavel("Caneta (Sem a tinta)",0.2, TipoMaterial.PLASTICO),
+                    new MaterialReciclavel("Embalagens de produto de limpeza",0.7, TipoMaterial.PLASTICO),
+                    new MaterialReciclavel("Brinquedos de plástico",1.5, TipoMaterial.PLASTICO),
+                    new MaterialReciclavel("Embalagens Pet",0.7, TipoMaterial.PLASTICO)
+                    );
 
             ApiResponse<Void> insercaoResponse = inserirMateriaisReciclaveis(materiaisReciclaveis);
             if (insercaoResponse.getStatus() != 200) {

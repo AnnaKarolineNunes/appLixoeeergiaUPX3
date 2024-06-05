@@ -25,12 +25,16 @@ public class MaterialReciclavel {
     @Enumerated(EnumType.STRING)
     private TipoMaterial tipoMaterial;
 
+    @Column(nullable = false)
+    private Double peso;
+
     public MaterialReciclavel(Long id){
     }
 
-    public MaterialReciclavel(String nome, TipoMaterial tipoMaterial) {
+    public MaterialReciclavel(String nome,Double peso, TipoMaterial tipoMaterial) {
         this.nome = nome;
         this.tipoMaterial = tipoMaterial;
+        this.peso = peso;
     }
 
 }

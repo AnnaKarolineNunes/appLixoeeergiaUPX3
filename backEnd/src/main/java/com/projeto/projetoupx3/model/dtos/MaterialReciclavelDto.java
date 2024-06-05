@@ -20,10 +20,13 @@ public class MaterialReciclavelDto {
 
     private TipoMaterial tipoMaterial;
 
+    private Double peso;
+
     public MaterialReciclavelDto(MaterialReciclavel materialReciclavel) {
         this.id = materialReciclavel.getId();
         this.nome = materialReciclavel.getNome();
         this.tipoMaterial = materialReciclavel.getTipoMaterial();
+        this.peso = materialReciclavel.getPeso();
     }
 
     public static MaterialReciclavel convert(MaterialReciclavelDto materialReciclavelDto) {
@@ -31,6 +34,7 @@ public class MaterialReciclavelDto {
         materialReciclavel.setId(materialReciclavelDto.getId());
         materialReciclavel.setNome(materialReciclavelDto.getNome());
         materialReciclavel.setTipoMaterial(materialReciclavelDto.getTipoMaterial());
+        materialReciclavel.setPeso(materialReciclavelDto.getPeso());
         return materialReciclavel;
     }
 }
