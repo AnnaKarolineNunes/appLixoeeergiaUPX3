@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MaterialReciclavelDto {
 
-    private Long id;
+    private Long idMaterial;
 
     @NotBlank(message = "O nome é obrigatório")
     private String nome;
@@ -23,15 +23,15 @@ public class MaterialReciclavelDto {
     private Double peso;
 
     public MaterialReciclavelDto(MaterialReciclavel materialReciclavel) {
-        this.id = materialReciclavel.getId();
+        this.idMaterial = materialReciclavel.getIdMaterial();
         this.nome = materialReciclavel.getNome();
         this.tipoMaterial = materialReciclavel.getTipoMaterial();
         this.peso = materialReciclavel.getPeso();
     }
 
     public static MaterialReciclavel convert(MaterialReciclavelDto materialReciclavelDto) {
-        MaterialReciclavel materialReciclavel = new MaterialReciclavel(materialReciclavelDto.getId());
-        materialReciclavel.setId(materialReciclavelDto.getId());
+        MaterialReciclavel materialReciclavel = new MaterialReciclavel(materialReciclavelDto.getIdMaterial());
+        materialReciclavel.setIdMaterial(materialReciclavelDto.getIdMaterial());
         materialReciclavel.setNome(materialReciclavelDto.getNome());
         materialReciclavel.setTipoMaterial(materialReciclavelDto.getTipoMaterial());
         materialReciclavel.setPeso(materialReciclavelDto.getPeso());

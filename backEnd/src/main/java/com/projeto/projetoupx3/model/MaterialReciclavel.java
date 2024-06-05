@@ -16,7 +16,7 @@ import lombok.Setter;
 public class MaterialReciclavel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idMaterial;
 
     @Column(nullable = false)
     private String nome;
@@ -28,7 +28,7 @@ public class MaterialReciclavel {
     @Column(nullable = false)
     private Double peso;
 
-    public MaterialReciclavel(Long id){
+    public MaterialReciclavel(Long idMaterial){
     }
 
     public MaterialReciclavel(String nome,Double peso, TipoMaterial tipoMaterial) {
