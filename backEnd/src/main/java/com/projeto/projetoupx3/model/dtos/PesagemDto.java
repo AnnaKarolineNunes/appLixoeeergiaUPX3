@@ -27,10 +27,11 @@ public class PesagemDto {
         this.pesoTotal = pesagem.getPesoTotal();
     }
 
-    public static Pesagem convert(PesagemDto pesagemDto){
+    // Método estático para converter PesagemDto para Pesagem
+    public static Pesagem convert(PesagemDto pesagemDto, MaterialReciclavel materialReciclavel){
         Pesagem pesagem = new Pesagem();
         pesagem.setId(pesagemDto.getId());
-        pesagem.setMaterialReciclavel(pesagemDto.getMaterialReciclavel());
+        pesagem.setMaterialReciclavel(pesagemDto.getMaterialReciclavel()); // Define o MaterialReciclavel diretamente
         pesagem.setPesoTotal(pesagemDto.getPesoTotal());
         return pesagem;
     }

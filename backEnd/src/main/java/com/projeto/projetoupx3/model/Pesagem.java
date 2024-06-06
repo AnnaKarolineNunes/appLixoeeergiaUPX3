@@ -44,4 +44,7 @@ public class Pesagem {
 
     public void setMaterialReciclavel(Long materialReciclavel) {
     }
+
+    public void setMaterialReciclavel(MaterialReciclavel materialReciclavel) {
+    }
 }

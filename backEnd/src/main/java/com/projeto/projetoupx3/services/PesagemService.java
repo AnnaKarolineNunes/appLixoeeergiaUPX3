@@ -45,26 +45,44 @@ public class PesagemService {
 
     public ApiResponse<Double> calcularPesoTotal(List<Long> idsMateriais) {
         try {
-            Double pesoTotal = 0.0;
+            double pesoTotal = 0.0;
 
             for (Long id : idsMateriais) {
                 Optional<MaterialReciclavel> materialOpt = materialReciclavelRepository.findById(id);
                 if (materialOpt.isPresent()) {
                     pesoTotal += materialOpt.get().getPeso();
+                } else {
+                    System.out.println("Material com ID " + id + " não encontrado.");
                 }
             }
 
             return new ApiResponse<>(200, "Cálculo de peso total realizado com sucesso!", pesoTotal);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ApiResponse<>(500, "Erro ao calcular peso total: " + e.getMessage(), null);
         }
     }
 
-    public ApiResponse<Void> salvarPesagem(Pesagem pesagem) {
+
+    public ApiResponse<Void> salvarPesagem(PesagemDto pesagemDto) {
         try {
-            pesagemRepository.save(pesagem);
-            return new ApiResponse<>(200, "Pesagem salva com sucesso!", null);
+            // Busca o MaterialReciclavel pelo ID
+            Optional<MaterialReciclavel> materialOpt = materialReciclavelRepository.findById(pesagemDto.getMaterialReciclavel());
+            if (materialOpt.isPresent()) {
+                MaterialReciclavel materialReciclavel = materialOpt.get();
+
+                // Cria a entidade Pesagem a partir do PesagemDto e do MaterialReciclavel encontrado
+                Pesagem pesagem = PesagemDto.convert(pesagemDto, materialReciclavel);
+
+                // Salva a Pesagem no banco de dados
+                pesagemRepository.save(pesagem);
+
+                return new ApiResponse<>(200, "Pesagem salva com sucesso!", null);
+            } else {
+                return new ApiResponse<>(404, "Material reciclável não encontrado para o ID fornecido", null);
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             return new ApiResponse<>(500, "Erro ao salvar pesagem: " + e.getMessage(), null);
         }
     }
