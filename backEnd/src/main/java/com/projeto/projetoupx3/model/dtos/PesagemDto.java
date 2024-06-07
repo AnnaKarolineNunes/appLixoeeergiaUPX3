@@ -16,12 +16,14 @@ public class PesagemDto {
     private Long id;
     private Long materialReciclavel; // Note que aqui é o ID do MaterialReciclavel
     private Double pesoTotal;
+    private Double desconto;
 
 
     public PesagemDto(Pesagem pesagem){
         this.id = pesagem.getId();
         this.materialReciclavel = pesagem.getMaterialReciclavel().getId();
         this.pesoTotal = pesagem.getPesoTotal();
+        this.desconto = pesagem.getDesconto();
     }
 
     // Método estático para converter PesagemDto para Pesagem
@@ -30,6 +32,7 @@ public class PesagemDto {
         pesagem.setId(pesagemDto.getId());
         pesagem.setMaterialReciclavel(materialReciclavel); // Define o MaterialReciclavel encontrado pelo ID
         pesagem.setPesoTotal(pesagemDto.getPesoTotal());
+        pesagem.setDesconto(pesagemDto.getDesconto());
         return pesagem;
     }
 

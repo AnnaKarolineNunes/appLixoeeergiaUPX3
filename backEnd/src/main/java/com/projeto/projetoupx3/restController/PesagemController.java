@@ -57,4 +57,33 @@ public class PesagemController {
     }
 
 
+    /**
+     * Endpoint para calcular e atualizar o desconto de uma pesagem específica.
+     * POST /pesagem/{id}/calcular-desconto
+     * @param id ID da pesagem para calcular o desconto.
+     * @return ApiResponse indicando o sucesso ou falha da operação de cálculo de desconto.
+     */
+    @PostMapping("/{id}/calcular-desconto")
+    public ApiResponse<Void> calcularEAtualizarDesconto(@PathVariable Long id) {
+        return pesagemService.calcularEAtualizarDesconto(id);
+    }
+
+
+    /**
+     * Endpoint para obter o desconto de uma pesagem específica.
+     * GET /pesagem/{id}/desconto
+     * @param id ID da pesagem para recuperar o desconto.
+     * @return ApiResponse contendo o desconto da pesagem ou mensagem de erro.
+     */
+    @GetMapping("/{id}/desconto")
+    public ApiResponse<Double> obterDesconto(@PathVariable Long id) {
+        return pesagemService.obterDesconto(id);
+    }
+
+    @GetMapping("/pesoTotal/{id}")
+    public ApiResponse<Double> getPesoTotalById(@PathVariable Long id) {
+        return pesagemService.getPesoTotalById(id);
+    }
+
+
 }

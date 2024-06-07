@@ -108,4 +108,62 @@ public class PesagemService {
         }
     }
 
+    //desconto
+
+    /**
+     * Calcula e salva o desconto para uma pesagem específica.
+     * @param id ID da pesagem para calcular o desconto.
+     * @return ApiResponse indicando o sucesso ou falha da operação de cálculo de desconto.
+     */
+    public ApiResponse<Void> calcularEAtualizarDesconto(Long id) {
+        try {
+            Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
+            if (pesagemOpt.isPresent()) {
+                Pesagem pesagem = pesagemOpt.get();
+                double desconto = pesagem.getPesoTotal() * 20; // Exemplo: Multiplica o peso total por 30 para calcular o desconto
+                pesagem.setDesconto(desconto);
+                pesagemRepository.save(pesagem);
+                return new ApiResponse<>(200, "Desconto calculado e atualizado com sucesso!", null);
+            } else {
+                return new ApiResponse<>(404, "Pesagem não encontrada para calcular o desconto.", null);
+            }
+        } catch (Exception e) {
+            return new ApiResponse<>(500, "Erro ao calcular e atualizar desconto: " + e.getMessage(), null);
+        }
+    }
+
+    /**
+     * Obtém o desconto de uma pesagem específica.
+     * @param id ID da pesagem para recuperar o desconto.
+     * @return ApiResponse contendo o desconto da pesagem ou mensagem de erro.
+     */
+    public ApiResponse<Double> obterDesconto(Long id) {
+        try {
+            Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
+            if (pesagemOpt.isPresent()) {
+                double desconto = pesagemOpt.get().getDesconto();
+                return new ApiResponse<>(200, "Desconto obtido com sucesso!", desconto);
+            } else {
+                return new ApiResponse<>(404, "Pesagem não encontrada para obter o desconto.", null);
+            }
+        } catch (Exception e) {
+            return new ApiResponse<>(500, "Erro ao obter desconto: " + e.getMessage(), null);
+        }
+    }
+
+    public ApiResponse<Double> getPesoTotalById(Long id) {
+        try {
+            Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
+            if (pesagemOpt.isPresent()) {
+                Pesagem pesagem = pesagemOpt.get();
+                return new ApiResponse<>(200, "Peso total da pesagem recuperado com sucesso!", pesagem.getPesoTotal());
+            } else {
+                return new ApiResponse<>(404, "Pesagem não encontrada para o ID fornecido", null);
+            }
+        } catch (Exception e) {
+            return new ApiResponse<>(500, "Erro ao recuperar peso total da pesagem: " + e.getMessage(), null);
+        }
+    }
+
+
 }

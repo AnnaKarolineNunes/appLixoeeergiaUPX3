@@ -33,13 +33,16 @@ public class Pesagem {
     @Column(name = "peso_total", nullable = false)
     private Double pesoTotal;
 
+    @Column(name = "desconto")
+    private Double desconto;
+
     public Pesagem(Long id) {
     }
 
-    public Pesagem(Long id, MaterialReciclavel materialReciclavel, Double pesoTotal) {
+    public Pesagem(Long id, MaterialReciclavel materialReciclavel, Double pesoTotal, Double desconto) {
         this.id = id;
         this.materialReciclavel = materialReciclavel;
         this.pesoTotal = pesoTotal;
+        this.desconto = desconto;
     }
-
 }
