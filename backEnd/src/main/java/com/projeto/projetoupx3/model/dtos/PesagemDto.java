@@ -2,7 +2,6 @@ package com.projeto.projetoupx3.model.dtos;
 
 import com.projeto.projetoupx3.model.*;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,23 +14,21 @@ import lombok.Setter;
 public class PesagemDto {
 
     private Long id;
-    private Long materialReciclavel;
-
-    @NotBlank(message = "O nome é obrigatório")
+    private Long materialReciclavel; // Note que aqui é o ID do MaterialReciclavel
     private Double pesoTotal;
 
 
     public PesagemDto(Pesagem pesagem){
         this.id = pesagem.getId();
-        this.materialReciclavel = pesagem.getMaterialReciclavel().getIdMaterial();
+        this.materialReciclavel = pesagem.getMaterialReciclavel().getId();
         this.pesoTotal = pesagem.getPesoTotal();
     }
 
     // Método estático para converter PesagemDto para Pesagem
-    public static Pesagem convert(PesagemDto pesagemDto, MaterialReciclavel materialReciclavel){
+    public static Pesagem convert(PesagemDto pesagemDto, MaterialReciclavel materialReciclavel) {
         Pesagem pesagem = new Pesagem();
         pesagem.setId(pesagemDto.getId());
-        pesagem.setMaterialReciclavel(pesagemDto.getMaterialReciclavel()); // Define o MaterialReciclavel diretamente
+        pesagem.setMaterialReciclavel(materialReciclavel); // Define o MaterialReciclavel encontrado pelo ID
         pesagem.setPesoTotal(pesagemDto.getPesoTotal());
         return pesagem;
     }

@@ -117,4 +117,28 @@ public class MaterialReciclavelService {
     public boolean materialExistsByNome(String nome) {
         return materialReciclavelRepository.existsByNome(nome);
     }
+
+    public ApiResponse<MaterialReciclavelDto> updateById(Long id, MaterialReciclavelDto dto) {
+        try {
+            Optional<MaterialReciclavel> materialOpt = materialReciclavelRepository.findById(id);
+            if (materialOpt.isPresent()) {
+                MaterialReciclavel materialReciclavel = materialOpt.get();
+
+                // Atualiza os campos necessários com base no DTO recebido
+                materialReciclavel.setNome(dto.getNome());
+                materialReciclavel.setTipoMaterial(dto.getTipoMaterial());
+                materialReciclavel.setPeso(dto.getPeso());
+
+                // Salva as mudanças no banco de dados
+                materialReciclavelRepository.save(materialReciclavel);
+
+                return new ApiResponse<>(200, "Material reciclável atualizado com sucesso!",
+                        new MaterialReciclavelDto(materialReciclavel));
+            } else {
+                return new ApiResponse<>(404, "Material reciclável não encontrado para o ID fornecido", null);
+            }
+        } catch (Exception e) {
+            return new ApiResponse<>(500, "Erro ao atualizar material reciclável: " + e.getMessage(), null);
+        }
+    }
 }

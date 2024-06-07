@@ -42,9 +42,4 @@ public class Pesagem {
         this.pesoTotal = pesoTotal;
     }
 
-    public void setMaterialReciclavel(Long materialReciclavel) {
-    }
-
-    public void setMaterialReciclavel(MaterialReciclavel materialReciclavel) {
-    }
 }

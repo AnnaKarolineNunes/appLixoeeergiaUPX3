@@ -48,11 +48,6 @@ public class MaterialReciclavelController {
      * @param id ID do material reciclável a ser atualizado.
      * @param dto Objeto contendo os novos dados do material reciclável.
      */
-    @PutMapping("materiaisReciclaveis/{id}")
-    public ApiResponse<MaterialReciclavelDto> updateById(@PathVariable Long id, @RequestBody MaterialReciclavelDto dto) {
-        // Implementar se necessário
-        return new ApiResponse<>(404, "Endpoint não implementado", null);
-    }
 
     /**
      * Endpoint para deletar um material reciclável por ID.
@@ -63,5 +58,10 @@ public class MaterialReciclavelController {
     public ApiResponse<Void> deleteById(@PathVariable Long id) {
         // Implementar se necessário
         return new ApiResponse<>(404, "Endpoint não implementado", null);
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse<MaterialReciclavelDto> updateById(@PathVariable Long id, @RequestBody MaterialReciclavelDto dto) {
+        return materialReciclavelService.updateById(id, dto);
     }
 }

@@ -22,24 +22,29 @@ public class PesagemService {
     @Autowired
     MaterialReciclavelRepository materialReciclavelRepository;
 
-    public ApiResponse<List<PesagemDto>> findAll(){
+    public ApiResponse<List<PesagemDto>> findAll() {
         try {
-            List<Pesagem> pesagens = this.pesagemRepository.findAll();
-            return new ApiResponse<>(200, "Listagem de pesagens realizada com sucesso!",
-                    pesagens.stream().map(PesagemDto::new).collect(Collectors.toList()));
+            List<Pesagem> pesagens = pesagemRepository.findAll();
+            List<PesagemDto> pesagemDtos = pesagens.stream()
+                    .map(PesagemDto::new)
+                    .collect(Collectors.toList());
+
+            return new ApiResponse<>(200, "Listagem de pesagens realizada com sucesso!", pesagemDtos);
         } catch (Exception e) {
-            return new ApiResponse<>(500, e.getMessage(), null);
+            e.printStackTrace();
+            return new ApiResponse<>(500, "Erro ao listar pesagens: " + e.getMessage(), null);
         }
     }
 
     public ApiResponse<PesagemDto> findById(Long id) {
         try {
-            Optional<Pesagem> resultado = this.pesagemRepository.findById(id);
+            Optional<Pesagem> resultado = pesagemRepository.findById(id);
 
-            return resultado.map(pesagem -> new ApiResponse<>(200, "Detalhamento de pesagens realizado com sucesso!",
-                    new PesagemDto(pesagem))).orElseGet(() -> new ApiResponse<>(204, "Pesagem não encontrada!", null));
+            return resultado.map(pesagem -> new ApiResponse<>(200, "Detalhamento de pesagem encontrado com sucesso!",
+                    new PesagemDto(pesagem))).orElseGet(() -> new ApiResponse<>(404, "Pesagem não encontrada para o ID fornecido", null));
         } catch (Exception e) {
-            return new ApiResponse<>(500, e.getMessage(), null);
+            e.printStackTrace();
+            return new ApiResponse<>(500, "Erro ao buscar pesagem: " + e.getMessage(), null);
         }
     }
 
@@ -88,5 +93,19 @@ public class PesagemService {
     }
 
 
+    public ApiResponse<Void> deleteById(Long id) {
+        try {
+            Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
+            if (pesagemOpt.isPresent()) {
+                pesagemRepository.deleteById(id);
+                return new ApiResponse<>(200, "Pesagem deletada com sucesso!", null);
+            } else {
+                return new ApiResponse<>(404, "Pesagem não encontrada para o ID fornecido", null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse<>(500, "Erro ao deletar pesagem: " + e.getMessage(), null);
+        }
+    }
 
 }

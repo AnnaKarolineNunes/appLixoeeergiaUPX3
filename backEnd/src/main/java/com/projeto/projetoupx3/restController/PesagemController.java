@@ -49,9 +49,12 @@ public class PesagemController {
         return pesagemService.salvarPesagem(pesagemDto);
     }
 
+
     @DeleteMapping("/{id}")
     public ApiResponse<Void> deleteById(@PathVariable Long id) {
-        // Implementar se necessário
-        return new ApiResponse<>(404, "Endpoint não implementado", null);
+        return pesagemService.deleteById(id);
+
     }
+
+
 }
