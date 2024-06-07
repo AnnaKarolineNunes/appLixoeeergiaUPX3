@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+// Serviço para operações relacionadas à entidade Pesagem
 public class PesagemService {
 
     @Autowired
@@ -22,6 +23,10 @@ public class PesagemService {
     @Autowired
     MaterialReciclavelRepository materialReciclavelRepository;
 
+    /**
+     * Busca todas as pesagens cadastradas.
+     * @return ApiResponse contendo a lista de pesagens encontradas ou mensagem de erro.
+     */
     public ApiResponse<List<PesagemDto>> findAll() {
         try {
             List<Pesagem> pesagens = pesagemRepository.findAll();
@@ -36,6 +41,11 @@ public class PesagemService {
         }
     }
 
+    /**
+     * Busca uma pesagem pelo ID.
+     * @param id ID da pesagem a ser buscada.
+     * @return ApiResponse contendo a pesagem encontrada ou mensagem de erro.
+     */
     public ApiResponse<PesagemDto> findById(Long id) {
         try {
             Optional<Pesagem> resultado = pesagemRepository.findById(id);
@@ -48,6 +58,11 @@ public class PesagemService {
         }
     }
 
+    /**
+     * Calcula o peso total de uma lista de materiais recicláveis.
+     * @param idsMateriais Lista de IDs dos materiais recicláveis.
+     * @return ApiResponse contendo o peso total calculado ou mensagem de erro.
+     */
     public ApiResponse<Double> calcularPesoTotal(List<Long> idsMateriais) {
         try {
             double pesoTotal = 0.0;
@@ -68,20 +83,18 @@ public class PesagemService {
         }
     }
 
-
+    /**
+     * Salva uma nova pesagem.
+     * @param pesagemDto Dados da pesagem a serem salvos.
+     * @return ApiResponse indicando o sucesso ou falha da operação de salvamento.
+     */
     public ApiResponse<Void> salvarPesagem(PesagemDto pesagemDto) {
         try {
-            // Busca o MaterialReciclavel pelo ID
             Optional<MaterialReciclavel> materialOpt = materialReciclavelRepository.findById(pesagemDto.getMaterialReciclavel());
             if (materialOpt.isPresent()) {
                 MaterialReciclavel materialReciclavel = materialOpt.get();
-
-                // Cria a entidade Pesagem a partir do PesagemDto e do MaterialReciclavel encontrado
                 Pesagem pesagem = PesagemDto.convert(pesagemDto, materialReciclavel);
-
-                // Salva a Pesagem no banco de dados
                 pesagemRepository.save(pesagem);
-
                 return new ApiResponse<>(200, "Pesagem salva com sucesso!", null);
             } else {
                 return new ApiResponse<>(404, "Material reciclável não encontrado para o ID fornecido", null);
@@ -92,7 +105,11 @@ public class PesagemService {
         }
     }
 
-
+    /**
+     * Deleta uma pesagem pelo ID.
+     * @param id ID da pesagem a ser deletada.
+     * @return ApiResponse indicando o sucesso ou falha da operação de deleção.
+     */
     public ApiResponse<Void> deleteById(Long id) {
         try {
             Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
@@ -108,19 +125,17 @@ public class PesagemService {
         }
     }
 
-    //desconto
-
     /**
-     * Calcula e salva o desconto para uma pesagem específica.
+     * Calcula e atualiza o desconto para uma pesagem específica.
      * @param id ID da pesagem para calcular o desconto.
-     * @return ApiResponse indicando o sucesso ou falha da operação de cálculo de desconto.
+     * @return ApiResponse indicando o sucesso ou falha da operação de cálculo e atualização do desconto.
      */
     public ApiResponse<Void> calcularEAtualizarDesconto(Long id) {
         try {
             Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
             if (pesagemOpt.isPresent()) {
                 Pesagem pesagem = pesagemOpt.get();
-                double desconto = pesagem.getPesoTotal() * 20; // Exemplo: Multiplica o peso total por 30 para calcular o desconto
+                double desconto = pesagem.getPesoTotal() * 20; // Exemplo: Multiplica o peso total por 20 para calcular o desconto
                 pesagem.setDesconto(desconto);
                 pesagemRepository.save(pesagem);
                 return new ApiResponse<>(200, "Desconto calculado e atualizado com sucesso!", null);
@@ -151,6 +166,11 @@ public class PesagemService {
         }
     }
 
+    /**
+     * Obtém o peso total de uma pesagem pelo ID.
+     * @param id ID da pesagem para recuperar o peso total.
+     * @return ApiResponse contendo o peso total da pesagem ou mensagem de erro.
+     */
     public ApiResponse<Double> getPesoTotalById(Long id) {
         try {
             Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
@@ -164,6 +184,4 @@ public class PesagemService {
             return new ApiResponse<>(500, "Erro ao recuperar peso total da pesagem: " + e.getMessage(), null);
         }
     }
-
-
 }

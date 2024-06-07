@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pontoColeta")
+// Entidade que representa um ponto de coleta no sistema
 public class PontoColeta {
 
     @Id
@@ -24,9 +25,11 @@ public class PontoColeta {
     @Column
     private String localizacao;
 
+    // Construtor vazio necessário para JPA
     public PontoColeta(Long id) {
     }
 
+    // Construtor para inicializar um ponto de coleta com nome e localização
     public PontoColeta(String nome, String localizacao) {
         this.nome = nome;
         this.localizacao = localizacao;

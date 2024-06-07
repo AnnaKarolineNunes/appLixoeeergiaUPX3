@@ -1,7 +1,7 @@
 package com.projeto.projetoupx3.enumerator;
 
 
-
+// Enumeração que define os tipos de materiais disponíveis
 public enum TipoMaterial {
 
     PAPEL("PAPEL"),
@@ -15,6 +15,7 @@ public enum TipoMaterial {
         this.tipoMaterial = tipoMaterial;
     }
 
+    // Obtém o nome do tipo de material
     public String getTipoMaterial() {
         return tipoMaterial;
     }

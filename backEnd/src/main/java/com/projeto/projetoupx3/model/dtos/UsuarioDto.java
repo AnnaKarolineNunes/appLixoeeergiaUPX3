@@ -1,5 +1,7 @@
 package com.projeto.projetoupx3.model.dtos;
+
 import com.projeto.projetoupx3.model.Usuario;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+// DTO (Data Transfer Object) que representa um usuário para transferência de dados entre camadas
 public class UsuarioDto {
     private Long id;
 
@@ -18,14 +21,15 @@ public class UsuarioDto {
 
     private String sobrenome;
 
-    @NotBlank(message = "o email é obrigatório")
+    @NotBlank(message = "O email é obrigatório")
     private String email;
 
-    @NotBlank(message = "a senha é obrigatória")
+    @NotBlank(message = "A senha é obrigatória")
     private String senha;
 
     private String confirmaSenha;
 
+    // Construtor que converte um objeto Usuario para UsuarioDto
     public UsuarioDto(Usuario usuario){
         this.id = usuario.getId();
         this.email = usuario.getEmail();
@@ -34,9 +38,9 @@ public class UsuarioDto {
         this.senha = usuario.getSenha();
     }
 
+    // Método estático para converter UsuarioDto para Usuario
     public static Usuario convert(UsuarioDto usuarioDTO){
         Usuario usuario = new Usuario(usuarioDTO.getId());
-
         usuario.setId(usuarioDTO.getId());
         usuario.setNome(usuarioDTO.getNome());
         usuario.setSobrenome(usuarioDTO.getSobrenome());

@@ -1,7 +1,7 @@
 package com.projeto.projetoupx3.model;
 
-
 import com.projeto.projetoupx3.enumerator.TipoMaterial;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import lombok.Setter;
 @Entity(name = "materialReciclavel")
 @NoArgsConstructor
 @AllArgsConstructor
+// Entidade que representa um material reciclável no sistema
 public class MaterialReciclavel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +30,12 @@ public class MaterialReciclavel {
     @Column(name = "peso", nullable = false)
     private Double peso;
 
+    // Construtor vazio necessário para JPA
     public MaterialReciclavel(Long id){
     }
 
-    public MaterialReciclavel(String nome,Double peso, TipoMaterial tipoMaterial) {
+    // Construtor para inicializar um material reciclável com nome, peso e tipo
+    public MaterialReciclavel(String nome, Double peso, TipoMaterial tipoMaterial) {
         this.nome = nome;
         this.tipoMaterial = tipoMaterial;
         this.peso = peso;

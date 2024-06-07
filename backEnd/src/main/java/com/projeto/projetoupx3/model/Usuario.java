@@ -1,6 +1,5 @@
 package com.projeto.projetoupx3.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name="usuario")
+// Entidade que representa um usuário no sistema
 public class Usuario {
 
     @Id
@@ -31,6 +31,7 @@ public class Usuario {
     @Column(length = 30)
     private String senha;
 
+    // Construtor vazio necessário para JPA
     public Usuario(Long id) {
     }
 }
