@@ -135,7 +135,7 @@ public class PesagemService {
             Optional<Pesagem> pesagemOpt = pesagemRepository.findById(id);
             if (pesagemOpt.isPresent()) {
                 Pesagem pesagem = pesagemOpt.get();
-                double desconto = pesagem.getPesoTotal() * 20; // Exemplo: Multiplica o peso total por 20 para calcular o desconto
+                double desconto = pesagem.getPesoTotal() * 10; // Exemplo: Multiplica o peso total
                 pesagem.setDesconto(desconto);
                 pesagemRepository.save(pesagem);
                 return new ApiResponse<>(200, "Desconto calculado e atualizado com sucesso!", null);
