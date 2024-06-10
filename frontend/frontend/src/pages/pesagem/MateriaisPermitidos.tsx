@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import mountain from "../../assets/icon.png";
 import recycleIcon from "../../assets/recycle.png";
-
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 interface MaterialCategoryProps {
     category: string;
     allowed: string[];
@@ -9,6 +10,18 @@ interface MaterialCategoryProps {
 }
 
 export default function ListaMateriais() {
+    const navigate = useNavigate()
+    const location = useLocation()
+    const { collectionPoint, address } = location.state || { collectionPoint: "Ponto de coleta não selecionado" }
+
+    const handleNavigateHome = () => {
+        navigate('/')
+    }
+
+    const handleNavigateMateriais = () => {
+        navigate('/selecionar-materiais', { state: { collectionPoint, address } })
+    }
+
     return (
         <div className="flex flex-col h-screen">
             <header className="bg-white text-black px-4 py-2 flex flex-col items-center justify-center">
@@ -42,12 +55,12 @@ export default function ListaMateriais() {
                         notAllowed={["Adesivos, etiquetas, fita crepe, papel carbono, fotografias, papéis engordurados, papel toalha e higiênico"]}
                     />
                 </div>
-                <Button variant="default" className="bg-yellow-500 text-white w-full max-w-md mt-4">
+                <Button variant="default" className="bg-yellow-500 text-white w-full max-w-md mt-4" onClick={handleNavigateMateriais}>
                     Avançar
                 </Button>
             </div>
             <footer className="bg-[#F5F5F5] px-4 py-2 flex items-center justify-center w-full">
-                <Button variant="ghost" className="flex items-center w-full">
+                <Button variant="ghost" className="flex items-center w-full" onClick={handleNavigateHome}>
                     <HomeIcon className="h-6 w-6 mr-2" />
                 </Button>
             </footer>

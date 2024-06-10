@@ -1,11 +1,18 @@
 import { Button } from "@/components/ui/button";
 import mountain from "../../assets/icon.png";
 import successImage from "../../assets/success.png"; // Certifique-se de que a imagem esteja no caminho correto
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function ConfirmacaoDesconto() {
-    const desconto = "20Kw/h"; // Exemplo de desconto, você pode ajustar conforme necessário
-    const pontoColeta = "Estação Zona Sul, rua bari, 109, guarani";
-    const distancia = "2km";
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { totalWeight, collectionPoint, address } = location.state || { totalWeight: 0, collectionPoint: "Ponto de coleta não selecionado", address: "Endereço não disponível" };
+    const desconto = `${Math.floor(totalWeight / 100) * 10}Kw/h`; // Calcula 10 kWh para cada 100 gramas
+    console.log(totalWeight, collectionPoint, address);
+    const handleNavigateHome = () => {
+        navigate("/");
+    };
 
     return (
         <div className="flex flex-col h-screen">
@@ -20,19 +27,19 @@ export default function ConfirmacaoDesconto() {
             </header>
             <div className="flex-1 flex flex-col items-center justify-center bg-white space-y-4 px-4">
                 <h1 className="text-center text-lg font-bold">Parabéns!</h1>
-                <p className="text-center">Seu desconto foi de :</p>
+                <p className="text-center">Seu desconto foi de:</p>
                 <div className="bg-[#F5F5F5] rounded-lg p-4 text-center w-full max-w-md">
                     <p className="text-2xl font-bold">{desconto}</p>
                 </div>
                 <img src={successImage} alt="Success" className="w-40 h-40 my-4" />
                 <div className="bg-[#F5F5F5] rounded-lg p-4 text-center w-full max-w-md">
                     <p className="font-bold">Ponto de coleta escolhido:</p>
-                    <p className="text-lg">{pontoColeta}</p>
-                    <p>{distancia}</p>
+                    <p className="text-lg">{collectionPoint}</p>
+                    <p>{address}</p>
                 </div>
             </div>
             <footer className="bg-[#F5F5F5] px-4 py-2 flex items-center justify-center w-full">
-                <Button variant="ghost" className="flex items-center w-full">
+                <Button variant="ghost" className="flex items-center w-full" onClick={handleNavigateHome}>
                     <HomeIcon className="h-6 w-6 mr-2" />
                 </Button>
             </footer>

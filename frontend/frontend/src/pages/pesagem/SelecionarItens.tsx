@@ -1,17 +1,55 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
+import { useLocation } from 'react-router-dom';
 import mountain from "../../assets/icon.png";
+import { useNavigate } from 'react-router-dom';
 
 export default function InserirResiduos() {
-    const [items, setItems] = useState(["Caixa de Leite", "Caixa de Papelão", "Vidro"]);
+    const location = useLocation();
+    const { selectedMaterials } = location.state || { selectedMaterials: [] };
+    const [items, setItems] = useState<{ name: string; type: string; weight: number }[]>([]);
+    const [filteredItems, setFilteredItems] = useState<{ name: string; type: string; weight: number }[]>([]);
+    const [selectedItems, setSelectedItems] = useState<{ name: string; type: string; weight: number }[]>([]);
+    const { collectionPoint, address } = location.state || { collectionPoint: "Ponto de coleta não selecionado", address: "Endereço não disponível" };
     const [newItem, setNewItem] = useState("");
     const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate();
+
+    const handleNavigateHome = () => {
+        navigate("/");
+    };
+
+    const handleNavigatePesagem = () => {
+        navigate("/pesagem", { state: { selectedItems, collectionPoint, address } });
+    };
+
+    useEffect(() => {
+        fetch('http://localhost:3000/items')
+            .then(response => response.json())
+            .then(data => {
+                setItems(data);
+                const filtered = data.filter((item: { type: string }) =>
+                    selectedMaterials.includes(item.type)
+                );
+                setFilteredItems(filtered);
+            })
+            .catch(error => console.error('Error loading items:', error));
+    }, [selectedMaterials]);
 
     const handleAddItem = () => {
         if (newItem.trim()) {
-            setItems([...items, newItem.trim()]);
+            const newItemObject = { name: newItem.trim(), type: "Custom", weight: 0 };
+            setFilteredItems([...filteredItems, newItemObject]);
             setNewItem("");
         }
+    };
+
+    const handleSelectItem = (item: { name: string; type: string; weight: number }) => {
+        setSelectedItems(prevState => 
+            prevState.includes(item) 
+            ? prevState.filter(selectedItem => selectedItem.name !== item.name) 
+            : [...prevState, item]
+        );
     };
 
     const handleFinalize = () => {
@@ -51,10 +89,16 @@ export default function InserirResiduos() {
                         </Button>
                     </div>
                     <ul className="list-none space-y-2">
-                        {items.map((item, index) => (
+                        {filteredItems.map((item, index) => (
                             <li key={index} className="flex items-center space-x-2">
-                                <input type="radio" name="recycle-item" id={`item-${index}`} className="h-5 w-5" />
-                                <label htmlFor={`item-${index}`} className="text-lg">{item}</label>
+                                <input
+                                    type="checkbox"
+                                    id={`item-${index}`}
+                                    className="h-5 w-5"
+                                    checked={selectedItems.some(selectedItem => selectedItem.name === item.name)}
+                                    onChange={() => handleSelectItem(item)}
+                                />
+                                <label htmlFor={`item-${index}`} className="text-lg">{item.name}</label>
                             </li>
                         ))}
                     </ul>
@@ -64,7 +108,7 @@ export default function InserirResiduos() {
                 </Button>
             </div>
             <footer className="bg-[#F5F5F5] px-4 py-2 flex items-center justify-center w-full">
-                <Button variant="ghost" className="flex items-center w-full">
+                <Button variant="ghost" className="flex items-center w-full" onClick={handleNavigateHome}>
                     <HomeIcon className="h-6 w-6 mr-2" />
                 </Button>
             </footer>
@@ -75,7 +119,7 @@ export default function InserirResiduos() {
                             <CloseIcon className="h-6 w-6" />
                         </button>
                         <h2 className="text-lg font-bold mb-4">Itens adicionados com sucesso!</h2>
-                        <Button variant="default" className="bg-green-500 text-white w-full mb-2">
+                        <Button variant="default" className="bg-green-500 text-white w-full mb-2" onClick={handleNavigatePesagem}>
                             Liberar pesagem
                         </Button>
                         <Button onClick={handleClosePopup} variant="ghost" className="bg-gray-200 w-full">
@@ -147,7 +191,7 @@ function AddIcon(props: any) {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            viewBox="0 0 24 24"
+            viewBox="0 0 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -167,7 +211,7 @@ function CloseIcon(props: any) {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            viewBox="0 0 24 24"
+            viewBox="0 0 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"

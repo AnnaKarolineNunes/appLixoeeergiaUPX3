@@ -1,0 +1,23 @@
+{
+  "items": [
+    { "id": 1, "name": "Caixa de Leite", "type": "Plástico", "weight": 200 },
+    { "id": 2, "name": "Caixa de Papelão", "type": "Papel", "weight": 300 },
+    { "id": 3, "name": "Vidro", "type": "Vidro", "weight": 500 },
+    { "id": 4, "name": "Lata de Alumínio", "type": "Metal", "weight": 50 },
+    { "id": 5, "name": "Garrafa de Plástico", "type": "Plástico", "weight": 100 },
+    { "id": 6, "name": "Jornal", "type": "Papel", "weight": 150 },
+    { "id": 7, "name": "Frasco de Perfume", "type": "Vidro", "weight": 250 },
+    { "id": 8, "name": "Lata de Refrigerante", "type": "Metal", "weight": 45 },
+    { "id": 9, "name": "Embalagem de Batata Chips", "type": "Plástico", "weight": 20 },
+    { "id": 10, "name": "Caixa de Sapato", "type": "Papel", "weight": 400 },
+    { "id": 11, "name": "Garrafa de Cerveja", "type": "Vidro", "weight": 600 },
+    { "id": 12, "name": "Lata de Conserva", "type": "Metal", "weight": 70 }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "example1@email.com",
+      "password": "password1"
+    }
+  ]
+}

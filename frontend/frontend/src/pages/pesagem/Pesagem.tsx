@@ -1,10 +1,29 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import mountain from "../../assets/icon.png";
 import weighingImage from "../../assets/weighing.png";
+import { useNavigate } from 'react-router-dom';
 
 export default function Pesagem() {
-    const [weight, setWeight] = useState(40); // Exemplo de peso total, você pode ajustar conforme necessário
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { selectedItems } = location.state || { selectedItems: [] };
+    const { collectionPoint, address } = location.state || { collectionPoint: "Ponto de coleta não selecionado", address: "Endereço não disponível" };
+    const [totalWeight, setTotalWeight] = useState(0);
+
+    useEffect(() => {
+        const weight = selectedItems.reduce((acc: any, item: any) => acc + item.weight, 0);
+        setTotalWeight(weight);
+    }, [selectedItems]);
+
+    const handleNavigateHome = () => {
+        navigate("/");
+    };
+
+    const handleNavigateDescontos = () => {
+        navigate("/desconto", { state: { totalWeight, collectionPoint, address } }); 
+    };
 
     return (
         <div className="flex flex-col h-screen">
@@ -25,14 +44,14 @@ export default function Pesagem() {
                 <img src={weighingImage} alt="Weighing" className="w-42 h-42 my-4" />
                 <p className="text-center text-lg font-bold">Total em Kg</p>
                 <div className="bg-[#F5F5F5] rounded-lg p-4 text-center w-full max-w-md mt-4">
-                    <p className="text-2xl font-bold">{weight}</p>
+                    <p className="text-2xl font-bold">{totalWeight / 1000}</p> {/* Convertendo para Kg */}
                 </div>
-                <Button variant="default" className="bg-yellow-500 text-white w-full max-w-md mt-4">
+                <Button variant="default" className="bg-yellow-500 text-white w-full max-w-md mt-4" onClick={handleNavigateDescontos}>
                     Calcular desconto
                 </Button>
             </div>
             <footer className="bg-[#F5F5F5] px-4 py-2 flex items-center justify-center w-full">
-                <Button variant="ghost" className="flex items-center w-full">
+                <Button variant="ghost" className="flex items-center w-full" onClick={handleNavigateHome}>
                     <HomeIcon className="h-6 w-6 mr-2" />
                 </Button>
             </footer>

@@ -1,8 +1,19 @@
 import { Button } from "@/components/ui/button"
 import coleta from '../assets/coleta.png'
 import mountain from "../assets/icon.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+    const navigate = useNavigate();
+
+    const handleNavigateHome = () => {
+        navigate('/');
+    }
+
+    const handleNavigatePontoColeta = () => {
+        navigate('/pontos-de-coleta');
+    }
+
     return (
         <div className="flex flex-col h-screen">
             <header className="bg-white text-black px-4 py-2 flex flex-col items-center justify-center">
@@ -15,13 +26,13 @@ export default function Home() {
                 </div>
             </header>
             <div className="flex-1 flex items-center justify-center bg-white">
-                <Button className="flex flex-col items-center justify-center space-y-4 w-[317px] h-[162px] bg-[#F5F5F5] hover:bg-[#F5F5F5] border-none rounded-lg">
+                <Button className="flex flex-col items-center justify-center space-y-4 w-[317px] h-[162px] bg-[#F5F5F5] hover:bg-[#F5F5F5] border-none rounded-lg" onClick={handleNavigatePontoColeta}>
                     <img src={coleta} alt="Coleta Icon" className="h-16 w-16 mx-auto" />
                     <h1 className="text-3xl font-bold text-black">Ponto de coleta</h1>
                 </Button>
             </div>
             <footer className="bg-[#F5F5F5] px-4 py-2 flex items-center justify-center w-full">
-                <Button variant="ghost" className="flex items-center w-full">
+                <Button variant="ghost" className="flex items-center w-full" onClick={handleNavigateHome}>
                     <HomeIcon className="h-6 w-6 mr-2" />
                 </Button>
             </footer>
